@@ -150,9 +150,9 @@ module ResourceThis # :nodoc:
           end
         end
 
-        def new          
+        def new
           respond_to do |format|
-            format.html { render :action => :edit }
+            format.html
             format.xml  { render :xml => @#{singular_name} }
             format.js
           end
@@ -166,12 +166,12 @@ module ResourceThis # :nodoc:
               format.xml  { render :xml => @#{singular_name}, :status => :created, :location => resource_url }
               format.js
             else
-              format.html { render :action => :edit }
+              format.html { render :action => "new" }
               format.xml  { render :xml => @#{singular_name}.errors, :status => :unprocessable_entity }
               format.js
             end
           end
-        end 
+        end
 
         def edit
           respond_to do |format|
@@ -188,14 +188,14 @@ module ResourceThis # :nodoc:
               format.xml  { head :ok }
               format.js
             else
-              format.html { render :action => :edit }
+              format.html { render :action => "edit" }
               format.xml  { render :xml => @#{singular_name}.errors, :status => :unprocessable_entity }
               format.js
             end
           end
         end
 
-        def destroy          
+        def destroy
           respond_to do |format|
             format.html { redirect_to(collection_url) }
             format.xml  { head :ok }
