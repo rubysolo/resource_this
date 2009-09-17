@@ -161,12 +161,17 @@ module ResourceThis # :nodoc:
         def create
           respond_to do |format|
             if @created
-              flash[:notice] = '#{class_name} was successfully created.'
-              format.html { redirect_to(resource_url) }
+              format.html {
+                flash[:done] = 'Successfully created #{class_name.titleize}.'
+                redirect_to(resource_url)
+              }
               format.xml  { render :xml => @#{singular_name}, :status => :created, :location => resource_url }
               format.js
             else
-              format.html { render :action => "new" }
+              format.html {
+                flash.now[:error] = 'Error(s) creating #{class_name.titleize}'
+                render :action => "new"
+              }
               format.xml  { render :xml => @#{singular_name}.errors, :status => :unprocessable_entity }
               format.js
             end
@@ -183,12 +188,17 @@ module ResourceThis # :nodoc:
         def update
           respond_to do |format|
             if @updated
-              flash[:notice] = '#{class_name} was successfully updated.'
-              format.html { redirect_to(resource_url) }
+              format.html {
+                flash[:done] = 'Successfully updated #{class_name.titleize}'
+                redirect_to(resource_url)
+              }
               format.xml  { head :ok }
               format.js
             else
-              format.html { render :action => "edit" }
+              format.html {
+                flash.now[:error] = 'Error(s) updating #{class_name.titleize}'
+                render :action => "edit"
+              }
               format.xml  { render :xml => @#{singular_name}.errors, :status => :unprocessable_entity }
               format.js
             end
